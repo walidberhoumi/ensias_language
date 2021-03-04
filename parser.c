@@ -1,8 +1,7 @@
 #include "parser.h"
-
 void error(enum ERROR error)
 {
-    swich( error )
+    switch( error )
     {
         case 0: printf("ERROR------>CHAR\n"); break;
         case 1: printf("ERROR------>SHORT\n"); break;
@@ -97,135 +96,39 @@ void error(enum ERROR error)
 }
 
 
-enum TOKEN nextSymbol(FILE* file)
+char* nextSymbol(FILE* file)
 {
     if(file != NULL)
     {
-        char* token;  
+        char* token = (char*) malloc(sizeof(char)*30);
+
         fgets(token,30,file);
-        return token;  
+        token[strlen(token)-1] = '\0';
+        return token;
     }
     else
     {
         printf("opening file error\n");
-        exit(EXIT_FAILURE);
+        exit(0);
     }
 }
 
-int syntax = 0;
-void testSymbol( enum TOKEN token, enum ERROR error )
+void testSymbol( char* token , enum ERROR erro , FILE* file )
 {
     char* tok = nextSymbol(file);
-    if(tok == token)
+    if(!strcmp(tok,token))
     {
-        nextSymbol(file);
+        syntax = 1;
     }
     else
-        syntax = 1;
-        error(error);
+    {
+        syntax = 0;
+        error(erro);
+    }
 }
-
-void analyzer(char* token)
+void analyzer(FILE* file)
 {
-
+    testSymbol("START_TOKEN",ERROR_START,file);
 }
 
-
-
-
-
-
-
-
-
-
-void testSymbol( enum TOKEN token, enum ERROR error );
-void CHAR();
-void SHORT();   
-void INT();     
-void LONG();    
-void FLOAT();   
-void DOUBLE();  
-void UNSIGNED();
-void VOID();    
-void TRUE();
-void FALSE();
-void ENUM();
-void UNION();
-void STRING();
-void STATIC();
-void MALLOC();
-void REALLOC();
-void CALLOC();
-void IF();
-void ELSE();
-void FOR();
-void FOREACH();
-void LOOP();
-void BREAK();
-void CONTINUE();
-void GOTO();
-void WHILE();
-void DO();
-void SWITCH();
-void CASE();
-void BOOL();
-void FILE();
-void CONST();
-void VOLATILE();
-void REGISTER();
-void ARRAY();
-void BYTE();
-void RECORD();
-void RETURN();
-void START();
-void END();
-void EOF();
-void READ();
-void WRITE();
-void WRITELN();
-void OPEN();
-void CLOSE();
-void ECHO();
-void PV();
-void PT();
-void PLUS();
-void MOINS();
-void MULT();
-void DIV();
-void VIR();
-void MOD();
-void INC();
-void DEC();
-void ETBIT();
-void OUBIT();
-void TOGGLE();
-void NOTBIT();
-void DECG();
-void DECD();
-void INF();
-void INFEG();
-void EG();
-void DIFF();
-void SUPEG();
-void SUP();
-void ETLOG();
-void OULOG();
-void DIFF();
-void ACCESTRU();
-void AFF();
-void AFFMOINS();
-void AFFPLUS();
-void AFFMULT();
-void AFFDIV();
-void AFFMOD();
-void AFFET();
-void AFFTOG();
-void FINCOM();
-void DEBCOM();
-void ACO();
-void ACF();
-void PO();
-void PF();
-void GUI();
 
